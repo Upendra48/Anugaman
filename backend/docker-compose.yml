@@ -3,6 +3,10 @@ services:
     build: .
     container_name: django_backend
 
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017
+      REDIS_HOST: redis
+
     ports:
       - "8000:8000"
 
