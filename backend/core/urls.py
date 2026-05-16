@@ -27,6 +27,9 @@ urlpatterns = [
     # API endpoints for boards
     path('api/boards/', include('apps.boards.urls')),
     
+    # API endpoints for jobs
+    path('api/jobs/', include('apps.jobs.urls')),
+    
     # API endpoint for testing database connection
     path('test-db/', test_db)
 ]
