@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -11,6 +11,7 @@ from .services import (
 )
 
 @api_view(['GET'])
+@authentication_classes([])
 @jwt_required
 def user_boards(request):
     user = request.user
@@ -20,6 +21,7 @@ def user_boards(request):
 
 
 @api_view(['GET'])
+@authentication_classes([])
 @jwt_required
 def single_board(request, board_id):
     
@@ -32,6 +34,7 @@ def single_board(request, board_id):
     return Response(board, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@authentication_classes([])
 @jwt_required
 def board_columns(request, board_id):
     
