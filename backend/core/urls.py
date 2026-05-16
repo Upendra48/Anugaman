@@ -20,6 +20,13 @@ from apps.authentication.views import test_db
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    # API endpoints for authentication 
     path('api/auth/', include('apps.authentication.urls')),
+    
+    # API endpoints for boards
+    path('api/boards/', include('apps.boards.urls')),
+    
+    # API endpoint for testing database connection
     path('test-db/', test_db)
 ]
