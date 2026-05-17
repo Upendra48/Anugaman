@@ -30,6 +30,9 @@ urlpatterns = [
     # API endpoints for jobs
     path('api/jobs/', include('apps.jobs.urls')),
     
+    # API endpoints for analytics
+    path('api/analytics/', include('apps.analytics.urls')),
+    
     # API endpoint for testing database connection
     path('test-db/', test_db)
 ]
