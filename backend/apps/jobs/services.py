@@ -5,6 +5,8 @@ from bson import ObjectId
 
 from services.mongo_service import db
 
+from services.redis_service import redis_client
+
 jobs_collection = db['jobs']
 columns_collection = db['columns']
 boards_collection = db['boards']
@@ -69,6 +71,8 @@ def create_job(data, user_id):
     result = jobs_collection.insert_one(job)
     job['_id'] = result.inserted_id 
     
+    clear_dashboard_cache(user_id)
+    
     return format_job(job)
 
 
@@ -122,6 +126,8 @@ def update_job(job_id, data, user_id):
         {'$set': update_data}
     )
     
+    clear_dashboard_cache(user_id)
+    
     updated_job = jobs_collection.find_one(
         {
             '_id': ObjectId(job_id)
@@ -141,6 +147,8 @@ def delete_job(job_id, user_id):
         return False, 'Job not found or access denied'
     
     jobs_collection.delete_one({'_id': ObjectId(job_id)})
+    
+    clear_dashboard_cache(user_id)
     
     return True, 'Job deleted successfully'
 
@@ -177,6 +185,8 @@ def move_job(job_id, target_column_id, new_order, user_id):
         }
     )
     
+    clear_dashboard_cache(user_id)
+    
     updated_job = jobs_collection.find_one(
         {
             '_id': ObjectId(job_id)
@@ -184,3 +194,8 @@ def move_job(job_id, target_column_id, new_order, user_id):
     )
     
     return format_job(updated_job)
+
+
+# to clear cache when job status changes
+def clear_dashboard_cache(user_id):
+    redis_client.delete(f'dashboard_summary_{user_id}')
