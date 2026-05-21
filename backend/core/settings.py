@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'drf_yasg',
+    'ratelimit',
     
     # local apps
     'apps.authentication',
@@ -81,6 +82,10 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 REST_FRAMEWORK = {
+    
+    # exception handler
+    'EXCEPTION_HANDLER': 'services.exceptions.custom_exception_handler',
+    
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -152,3 +157,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# for logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'handlers':{
+        'file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/app.log',
+        },
+    },
+    
+    'loggers':{
+        'django':{
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

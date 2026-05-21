@@ -7,6 +7,7 @@ from apps.authentication.middleware import jwt_required
 from .services import(
     create_job,
     get_job,
+    get_jobs,
     update_job,
     delete_job,
     move_job
@@ -38,6 +39,33 @@ def get_job_view(request, job_id):
         return Response({'error': 'Job not found'}, status=status.HTTP_404_NOT_FOUND)
     
     return Response(job, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@authentication_classes([])
+@jwt_required
+def get_jobs_view(request):
+    page = int(
+        request.query_params.get('page', 1)
+    )
+    
+    limit = int(
+        request.query_params.get('limit', 10)
+    )
+    
+    search = request.query_params.get('search')
+    
+    status_filter = request.GET.get('status')
+    
+    data = get_jobs(
+        request.user['_id'],
+        page,
+        limit,
+        search,
+        status_filter
+    )
+    
+    return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(['PUT'])

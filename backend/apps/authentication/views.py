@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from services.mongo_service import db
 from rest_framework import status
 
+from ratelimit.decorators import ratelimit
+
 
 
 @api_view(["GET"])
@@ -50,7 +52,10 @@ def register(request):
     )        
     
     
+    
 @api_view(["POST"])
+# Limit login attempts to 10 per minute per IP address
+@ratelimit(key="ip", rate="10/m", method="POST")
 def login(request):
     email = request.data.get("email")
     password = request.data.get("password")
