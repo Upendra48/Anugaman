@@ -93,6 +93,7 @@ def format_job(job):
     
 def get_job(job_id, user_id):
     
+    
     job = jobs_collection.find_one({
         '_id': ObjectId(job_id),
         'user_id': str(user_id)
@@ -102,6 +103,49 @@ def get_job(job_id, user_id):
         return None
     
     return format_job(job)
+
+
+# Get jobs with pagination, search and status filter
+def get_jobs(user_id, page = 1, limit =10, search = None, status_filter = None):
+    
+    query ={
+        'user_id': str(user_id)
+    }
+    
+    if search:
+        query['$or'] = [
+            {'title': {'$regex': search, '$options': 'i'}},
+            {'company': {'$regex': search, '$options': 'i'}}
+        ]
+        
+    if status_filter:
+        query['status'] = status_filter    
+        
+    skip = (page - 1) * limit
+    
+    jobs = list(
+        jobs_collection.find(query)
+        .sort('created_at', -1)
+        .skip(skip)
+        .limit(limit)
+    )    
+    
+    total = jobs_collection.count_documents(query)
+    
+    formatted_jobs = []
+    
+    for job in jobs:
+        formatted_jobs.append(format_job(job))
+        
+    return {
+        'jobs': formatted_jobs,
+        'pagination': {
+            'page': page,
+            'limit': limit,
+            'total': total,
+            'pages': (total + limit - 1) // limit
+        }
+    }    
 
 def update_job(job_id, data, user_id):
     

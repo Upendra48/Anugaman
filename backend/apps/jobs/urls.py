@@ -3,6 +3,7 @@ from django.urls import path
 from .views import(
     create_job_view,
     get_job_view,
+    get_jobs_view,
     update_job_view,
     delete_job_view,
     move_job_view
@@ -10,7 +11,9 @@ from .views import(
 
 urlpatterns = [
     
-    path('', create_job_view, name='create_job'),
+    path('', get_jobs_view, name='get_jobs'),
+    
+    path('create', create_job_view, name='create_job'),
     
     path('<str:job_id>/', get_job_view, name='get_job'),
     
