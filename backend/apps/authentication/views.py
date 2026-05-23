@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from services.mongo_service import db
 from rest_framework import status
 
-from ratelimit.decorators import ratelimit
+from django_ratelimit.decorators import ratelimit
 
 
 

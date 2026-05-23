@@ -25,8 +25,16 @@ DEBUG = os.getenv('DEBUG') == 'True'
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 
+CACHES ={
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache', 
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/1',
+    }
+}
+RATE_LIMIT_CACHE = 'default'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,7 +64,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'drf_yasg',
-    'ratelimit',
+    'django_ratelimit',
     
     # local apps
     'apps.authentication',
@@ -91,7 +99,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-ROOT_URLCONF = 'core.urls'
+ROOT_URLCONF = 'core.settings.urls'
 
 TEMPLATES = [
     {
