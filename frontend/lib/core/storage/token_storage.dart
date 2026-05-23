@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+// A class to handle token storage using flutter_secure_storage package
 class TokenStorage {
   static const _storage = const FlutterSecureStorage();
 
