@@ -1,0 +1,6 @@
+
+dio -> API requests
+flutter_riverpod -> state management
+go_router -> routing
+flutter_secure_storage -> JWT storage
+fl_chart -> analytics charts
