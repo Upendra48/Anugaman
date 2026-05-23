@@ -70,7 +70,7 @@ backend/
 
 ---
 
-# ⚙️ Run Project
+# Run Project
 
 ## Create `.env`
 
@@ -93,7 +93,7 @@ docker compose up --build
 
 ---
 
-# 🔗 API Endpoints
+# API Endpoints
 
 ## Register
 
