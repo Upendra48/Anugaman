@@ -1,8 +1,12 @@
+from urllib import request
+
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 from rest_framework import status
 
 from apps.authentication.middleware import jwt_required
+
+from services.validators import validate_job_data
 
 from .services import(
     create_job,
@@ -14,11 +18,17 @@ from .services import(
 )
 
 
+
 # create job endpoint
 @api_view(['POST'])
 @authentication_classes([])
 @jwt_required
 def create_job_view(request):
+    
+    # Validate input data
+    errors = validate_job_data(request.data)
+    if errors: 
+        return Response({'success': False,'error': errors}, status=status.HTTP_400_BAD_REQUEST)
     
     result = create_job(request.data, request.user['_id'])
     
