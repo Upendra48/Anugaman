@@ -31,8 +31,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r backend/requirements.txt
 
       - name: Python Syntax Check
         run: |
-          python -m py_compile $(find . -name "*.py")
+          python -m py_compile $(find backend -name "*.py")
