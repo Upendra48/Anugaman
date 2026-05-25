@@ -4,14 +4,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 
+import '../../../core/theme/app_spacing.dart';
+
+import '../widgets/sidebar_item.dart';
+
+import '../../jobs/widgets/kanban_column.dart';
+
+import '../../jobs/widgets/job_card.dart';
+
 import '../providers/dashboard_provider.dart';
 
-class DashboardScreen extends ConsumerWidget {
+import '../../jobs/providers/job_provider.dart';
+
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userAsync = ref.watch(currentUserProvider);
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  int selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final columnsAsync = ref.watch(columnsProvider);
+
+    final jobsAsync = ref.watch(jobsProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -20,37 +39,170 @@ class DashboardScreen extends ConsumerWidget {
         children: [
           // SIDEBAR
           Container(
-            width: 250,
+            width: 260,
 
-            color: AppColors.sidebar,
+            padding: const EdgeInsets.all(AppSpacing.lg),
 
-            padding: const EdgeInsets.all(24),
+            decoration: const BoxDecoration(
+              color: AppColors.sidebar,
+
+              border: Border(right: BorderSide(color: AppColors.border)),
+            ),
 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                const Text(
-                  "JobTracker",
+                // LOGO
+                const Row(
+                  children: [
+                    Icon(
+                      Icons.work_outline,
 
-                  style: TextStyle(
-                    color: Colors.white,
+                      color: AppColors.primary,
 
-                    fontSize: 28,
+                      size: 32,
+                    ),
 
-                    fontWeight: FontWeight.bold,
-                  ),
+                    SizedBox(width: 12),
+
+                    Text(
+                      "JobTracker",
+
+                      style: TextStyle(
+                        color: Colors.white,
+
+                        fontSize: 24,
+
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: AppSpacing.xxl),
 
-                sidebarItem(Icons.dashboard, "Dashboard"),
+                // NAVIGATION
+                SidebarItem(
+                  icon: Icons.dashboard_outlined,
 
-                sidebarItem(Icons.work, "Jobs"),
+                  title: "Dashboard",
 
-                sidebarItem(Icons.analytics, "Analytics"),
+                  active: selectedIndex == 0,
 
-                sidebarItem(Icons.settings, "Settings"),
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = 0;
+                    });
+                  },
+                ),
+
+                SidebarItem(
+                  icon: Icons.work_outline,
+
+                  title: "Applications",
+
+                  active: selectedIndex == 1,
+
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = 1;
+                    });
+                  },
+                ),
+
+                SidebarItem(
+                  icon: Icons.analytics_outlined,
+
+                  title: "Analytics",
+
+                  active: selectedIndex == 2,
+
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = 2;
+                    });
+                  },
+                ),
+
+                SidebarItem(
+                  icon: Icons.settings_outlined,
+
+                  title: "Settings",
+
+                  active: selectedIndex == 3,
+
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = 3;
+                    });
+                  },
+                ),
+
+                const Spacer(),
+
+                // USER PROFILE
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+
+                  decoration: BoxDecoration(
+                    color: AppColors.card,
+
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+
+                  child: const Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+
+                        backgroundColor: AppColors.primary,
+
+                        child: Text(
+                          "U",
+
+                          style: TextStyle(
+                            color: Colors.white,
+
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(width: 12),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: [
+                            Text(
+                              "Upendra",
+
+                              style: TextStyle(
+                                color: Colors.white,
+
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+
+                            SizedBox(height: 4),
+
+                            Text(
+                              "Backend Dev",
+
+                              style: TextStyle(
+                                color: AppColors.textSecondary,
+
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -58,90 +210,196 @@ class DashboardScreen extends ConsumerWidget {
           // MAIN CONTENT
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(AppSpacing.xl),
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
-                  // TOP BAR
-                  userAsync.when(
-                    data: (user) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // TOP NAVBAR
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                    children: [
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
 
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Text(
+                            "Dashboard",
 
-                            children: [
-                              Text(
-                                "Welcome back, ${user.username}",
+                            style: TextStyle(
+                              color: Colors.white,
 
-                                style: const TextStyle(
-                                  color: Colors.white,
+                              fontSize: 32,
 
-                                  fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
 
-                                  fontWeight: FontWeight.bold,
+                          SizedBox(height: 8),
+
+                          Text(
+                            "Track and manage your applications",
+
+                            style: TextStyle(color: AppColors.textSecondary),
+                          ),
+                        ],
+                      ),
+
+                      // SEARCH + NOTIFICATIONS
+                      Row(
+                        children: [
+                          Container(
+                            width: 280,
+
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+
+                            decoration: BoxDecoration(
+                              color: AppColors.card,
+
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+
+                            child: const TextField(
+                              style: TextStyle(color: Colors.white),
+
+                              decoration: InputDecoration(
+                                hintText: "Search...",
+
+                                hintStyle: TextStyle(
+                                  color: AppColors.textSecondary,
                                 ),
-                              ),
 
-                              const SizedBox(height: 8),
+                                border: InputBorder.none,
 
-                              Text(
-                                user.email,
+                                icon: Icon(
+                                  Icons.search,
 
-                                style: const TextStyle(
                                   color: AppColors.textSecondary,
                                 ),
                               ),
-                            ],
+                            ),
                           ),
 
-                          CircleAvatar(
-                            radius: 24,
+                          const SizedBox(width: AppSpacing.md),
 
-                            backgroundColor: AppColors.primary,
+                          Container(
+                            padding: const EdgeInsets.all(12),
 
-                            child: Text(
-                              user.username[0].toUpperCase(),
+                            decoration: BoxDecoration(
+                              color: AppColors.card,
 
-                              style: const TextStyle(
-                                color: Colors.white,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
 
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: const Icon(
+                              Icons.notifications_none,
+
+                              color: Colors.white,
                             ),
                           ),
                         ],
-                      );
-                    },
-
-                    loading: () => const CircularProgressIndicator(),
-
-                    error: (e, _) => Text(
-                      e.toString(),
-
-                      style: const TextStyle(color: Colors.red),
-                    ),
+                      ),
+                    ],
                   ),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: AppSpacing.xl),
 
-                  // DASHBOARD STATS - Placeholder for now
+                  // STATS SECTION
                   Row(
                     children: [
-                      statCard("Applied", "24"),
+                      statCard("Applications", "24", Icons.work_outline),
 
-                      const SizedBox(width: 20),
+                      const SizedBox(width: AppSpacing.lg),
 
-                      statCard("Interviewing", "8"),
+                      statCard("Interviews", "8", Icons.groups_outlined),
 
-                      const SizedBox(width: 20),
+                      const SizedBox(width: AppSpacing.lg),
 
-                      statCard("Offers", "3"),
+                      statCard("Offers", "3", Icons.local_offer_outlined),
+
+                      const SizedBox(width: AppSpacing.lg),
+
+                      statCard("Rejected", "5", Icons.close),
                     ],
+                  ),
+
+                  const SizedBox(height: AppSpacing.xl),
+
+                  // KANBAN BOARD
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(AppSpacing.lg),
+
+                      decoration: BoxDecoration(
+                        color: AppColors.sidebar,
+
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+
+                      child: columnsAsync.when(
+                        data: (columns) {
+                          return jobsAsync.when(
+                            data: (jobs) {
+                              return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+
+                                itemCount: columns.length,
+
+                                itemBuilder: (context, index) {
+                                  final column = columns[index];
+
+                                  final columnJobs = jobs.where((job) {
+                                    return job.status.toLowerCase() ==
+                                        column.title.toLowerCase();
+                                  }).toList();
+
+                                  return KanbanColumn(
+                                    title: column.title,
+
+                                    jobs: columnJobs.map((job) {
+                                      return JobCard(
+                                        company: job.company,
+
+                                        position: job.position,
+
+                                        location: job.location,
+
+                                        status: job.status,
+                                      );
+                                    }).toList(),
+                                  );
+                                },
+                              );
+                            },
+
+                            loading: () => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+
+                            error: (e, _) => Center(
+                              child: Text(
+                                e.toString(),
+
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          );
+                        },
+
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+
+                        error: (e, _) => Center(
+                          child: Text(
+                            e.toString(),
+
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -152,30 +410,10 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget sidebarItem(IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.white),
-
-          const SizedBox(width: 12),
-
-          Text(
-            title,
-
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget statCard(String title, String value) {
+  Widget statCard(String title, String value, IconData icon) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppSpacing.lg),
 
         decoration: BoxDecoration(
           color: AppColors.card,
@@ -187,9 +425,21 @@ class DashboardScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            Text(title, style: const TextStyle(color: AppColors.textSecondary)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-            const SizedBox(height: 12),
+              children: [
+                Text(
+                  title,
+
+                  style: const TextStyle(color: AppColors.textSecondary),
+                ),
+
+                Icon(icon, color: AppColors.primary),
+              ],
+            ),
+
+            const SizedBox(height: AppSpacing.md),
 
             Text(
               value,
