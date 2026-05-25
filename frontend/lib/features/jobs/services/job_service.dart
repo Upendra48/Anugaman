@@ -5,36 +5,49 @@ import '../../../core/api/dio_client.dart';
 import '../models/job_model.dart';
 
 class JobService {
-
-  static Future<List<JobModel>>
-      getJobs() async {
-
+  static Future<List<JobModel>> getJobs() async {
     try {
+      final response = await DioClient.dio.get("/jobs/");
 
-      final response =
-          await DioClient.dio.get(
-        "/jobs/",
-      );
+      final results = response.data["results"];
 
-      final results =
-          response.data["results"];
-
-      return (results as List)
-
-          .map(
-            (job) =>
-                JobModel.fromJson(job),
-          )
-
-          .toList();
-
+      return (results as List).map((job) => JobModel.fromJson(job)).toList();
     } on DioException catch (e) {
+      throw Exception(e.response?.data.toString() ?? "Failed to fetch jobs");
+    }
+  }
 
-      throw Exception(
+  static Future<void> createJob({
+    required String company,
 
-        e.response?.data.toString() ??
-        "Failed to fetch jobs",
+    required String position,
+
+    required String location,
+
+    required String status,
+  }) async {
+    try {
+      final response = await DioClient.dio.get("/boards/");
+
+      final boardId = response.data[0]["id"];
+
+      await DioClient.dio.post(
+        "/jobs/",
+
+        data: {
+          "company": company,
+
+          "position": position,
+
+          "location": location,
+
+          "status": status,
+
+          "board": boardId,
+        },
       );
+    } on DioException catch (e) {
+      throw Exception(e.response?.data.toString() ?? "Failed to create job");
     }
   }
 }

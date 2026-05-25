@@ -14,6 +14,9 @@ import '../../jobs/widgets/job_card.dart';
 
 import '../providers/dashboard_provider.dart';
 
+import '../../jobs/widgets/create_job_dialog.dart';
+
+import '../../jobs/services/job_service.dart';
 import '../../jobs/providers/job_provider.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
