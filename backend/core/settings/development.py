@@ -1,5 +1,5 @@
 from .base import *
-DEBUG = false 
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "anugaman.onrender.com",
