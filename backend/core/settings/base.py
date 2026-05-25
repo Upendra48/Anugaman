@@ -47,9 +47,7 @@ SECRET_KEY = 'django-insecure-eb(0bab-$l1fg0)lkzxex9lqw0afh(__4$9=w*h11gwa(7&qdp
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "anugaman.onrender.com",
-    "localhost",
-    "127.0.0.1",
+
 ]
 
 
