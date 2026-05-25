@@ -1,2 +1,8 @@
 from .base import *
-DEBUG = True
+DEBUG = false 
+
+ALLOWED_HOSTS = [
+    "anugaman.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
