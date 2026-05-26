@@ -1,4 +1,4 @@
-# Anugaman 🚀
+# Anugaman 
 
 A job application tracking backend system built with **Django REST Framework**, **MongoDB**.
 
@@ -6,7 +6,7 @@ Anugaman helps users manage and track their job applications using a modern Kanb
 
 ---
 
-# ✨ Features
+# Features
 
 - JWT Authentication
 - User Registration & Login
@@ -22,7 +22,7 @@ Anugaman helps users manage and track their job applications using a modern Kanb
 
 ---
 
-# 🛠️ Tech Stack
+# Tech Stack
 
 ## Backend
 - Django
@@ -36,7 +36,7 @@ Anugaman helps users manage and track their job applications using a modern Kanb
 
 ---
 
-# 📁 Project Structure
+# Project Structure
 
 ```bash
 Anugaman/
@@ -56,7 +56,7 @@ Anugaman/
 
 ---
 
-# ⚙️ Backend Setup
+# Backend Setup
 
 ## 1. Clone Repository
 
@@ -84,7 +84,7 @@ http://127.0.0.1:8000/
 
 ---
 
-# 🔐 Authentication
+# Authentication
 
 Authentication uses JWT Tokens.
 
@@ -100,9 +100,9 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 ---
 
-# 📡 API Endpoints
+# API Endpoints
 
-## 🔑 Authentication APIs
+## Authentication APIs
 
 ### Register User
 
@@ -122,11 +122,11 @@ POST /api/auth/login/
 GET /api/auth/me/
 ```
 
-Protected Route ✅
+Protected Route 
 
 ---
 
-## 📋 Board APIs
+## Board APIs
 
 ### Get User Boards
 
@@ -134,7 +134,7 @@ Protected Route ✅
 GET /api/boards/
 ```
 
-Protected Route ✅
+Protected Route 
 
 ---
 
@@ -144,11 +144,11 @@ Protected Route ✅
 GET /api/boards/{board_id}/columns/
 ```
 
-Protected Route ✅
+Protected Route 
 
 ---
 
-## 💼 Job APIs
+## Job APIs
 
 ### Create Job Application
 
@@ -156,7 +156,7 @@ Protected Route ✅
 POST /api/jobs/
 ```
 
-Protected Route ✅
+Protected Route 
 
 ---
 
@@ -166,7 +166,7 @@ Protected Route ✅
 GET /api/jobs/
 ```
 
-Protected Route ✅
+Protected Route 
 
 ---
 
@@ -176,7 +176,7 @@ Protected Route ✅
 PATCH /api/jobs/{job_id}/
 ```
 
-Protected Route ✅
+Protected Route 
 
 ---
 
@@ -186,11 +186,11 @@ Protected Route ✅
 DELETE /api/jobs/{job_id}/
 ```
 
-Protected Route ✅
+Protected Route 
 
 ---
 
-# ⚡ Redis Cache
+# Redis Cache
 
 Redis is used for caching frequently accessed data to improve API performance.
 
@@ -206,13 +206,13 @@ Redis is used for caching frequently accessed data to improve API performance.
 
 ---
 
-# 🧪 API Testing
+# API Testing
 
 API testing is done using Postman.
 
 ---
 
-# 🐳 Docker
+# Docker
 
 The backend is fully dockerized.
 
@@ -229,7 +229,7 @@ docker compose up
 
 ---
 
-# ⚡ CI/CD
+# CI/CD
 
 GitHub Actions automatically:
 
@@ -239,7 +239,7 @@ GitHub Actions automatically:
 
 ---
 
-# 🌱 Branching Strategy
+# Branching Strategy
 
 ```bash
 main
@@ -257,7 +257,7 @@ feature/*
 
 ---
 
-# 🚀 Future Improvements
+# Future Improvements
 
 - Analytics Dashboard
 - Drag & Drop Kanban
@@ -268,7 +268,7 @@ feature/*
 
 ---
 
-# 👨‍💻 Author
+# Author
 
 Upendra Raj Joshi
 
