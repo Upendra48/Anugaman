@@ -1,91 +1,74 @@
-# Job Application Tracker
+# Anugaman 🚀
 
-A full-stack job application tracking system built with Django, Flutter, MongoDB, and Redis.
+A job application tracking backend system built with **Django REST Framework**, **MongoDB**.
 
-## Tech Stack
-
-### Backend
-
-* Django
-* Django REST Framework
-* MongoDB (PyMongo)
-* Redis
-* JWT Authentication
-* Docker
-
-### Frontend
-
-* Flutter
-
-### Tools & DevOps
-
-* Postman
-* Git & GitHub
-* Docker Compose
-* CI/CD (Planned)
+Anugaman helps users manage and track their job applications using a modern Kanban-style workflow.
 
 ---
 
-# Features Implemented
+# ✨ Features
 
-## Backend Setup
-
-* Django project setup
-* MongoDB connection
-* Redis setup
-* Docker configuration
-* Environment variable management
-
-## Authentication System
-
-* User Registration API
-* User Login API
-* Password hashing using bcrypt
-* JWT Authentication
-* Protected Routes
-* Current User Endpoint
-* Auto board initialization
+- JWT Authentication
+- User Registration & Login
+- Protected API Routes
+- Auto Board Initialization
+- Kanban Board System
+- Job Application Management
+- Redis Caching
+- REST API Backend
+- Dockerized Backend
+- CI/CD with GitHub Actions
+- Scalable Project Architecture
 
 ---
 
-# Project Structure
+# 🛠️ Tech Stack
 
-```text
-backend/
+## Backend
+- Django
+- Django REST Framework
+- MongoDB
+- Redis
+- JWT Authentication
+- Docker
+- GitHub Actions
+
+
+---
+
+# 📁 Project Structure
+
+```bash
+Anugaman/
 │
-├── apps/
-│   ├── authentication/
-│   ├── boards/
-│   ├── jobs/
-│   └── analytics/
+├── backend/
+│   ├── apps/
+│   ├── config/
+│   ├── requirements.txt
+│   └── manage.py
 │
-├── core/
-├── services/
+|
 │
-├── Dockerfile
 ├── docker-compose.yml
-├── requirements.txt
-└── manage.py
+│
+└── README.md
 ```
 
 ---
 
-# Run Project
+# ⚙️ Backend Setup
 
-## Create `.env`
+## 1. Clone Repository
 
-```env
-SECRET_KEY=your_secret_key
-DEBUG=True
+```bash
+git clone https://github.com/Upendra48/Anugaman.git
 
-MONGODB_URI=mongodb://mongodb:27017
-MONGODB_DB=job_tracker
-
-REDIS_HOST=redis
-REDIS_PORT=6379
+cd Anugaman
 ```
 
-## Run with Docker
+---
+
+## 2. Start Docker Containers
 
 ```bash
 docker compose up --build
@@ -93,64 +76,201 @@ docker compose up --build
 
 ---
 
-# API Endpoints
+## 3. Backend Runs At
 
-## Register
+```bash
+http://127.0.0.1:8000/
+```
+
+---
+
+# 🔐 Authentication
+
+Authentication uses JWT Tokens.
+
+After login:
+- Access Token is returned
+- Use token in protected routes
+
+Example:
+
+```http
+Authorization: Bearer YOUR_ACCESS_TOKEN
+```
+
+---
+
+# 📡 API Endpoints
+
+## 🔑 Authentication APIs
+
+### Register User
 
 ```http
 POST /api/auth/register/
 ```
 
-## Login
+### Login User
 
 ```http
 POST /api/auth/login/
 ```
 
-## Current User
+### Get Current User
 
 ```http
 GET /api/auth/me/
 ```
 
-Requires:
+Protected Route ✅
 
-```text
-Authorization: Bearer <access_token>
+---
+
+## 📋 Board APIs
+
+### Get User Boards
+
+```http
+GET /api/boards/
+```
+
+Protected Route ✅
+
+---
+
+### Get Board Columns
+
+```http
+GET /api/boards/{board_id}/columns/
+```
+
+Protected Route ✅
+
+---
+
+## 💼 Job APIs
+
+### Create Job Application
+
+```http
+POST /api/jobs/
+```
+
+Protected Route ✅
+
+---
+
+### Get Jobs (Paginated)
+
+```http
+GET /api/jobs/
+```
+
+Protected Route ✅
+
+---
+
+### Update Job
+
+```http
+PATCH /api/jobs/{job_id}/
+```
+
+Protected Route ✅
+
+---
+
+### Delete Job
+
+```http
+DELETE /api/jobs/{job_id}/
+```
+
+Protected Route ✅
+
+---
+
+# ⚡ Redis Cache
+
+Redis is used for caching frequently accessed data to improve API performance.
+
+## Cached Features
+- Job Listings
+- Board Data
+- Faster API Responses
+
+## Benefits
+- Reduced database load
+- Faster response time
+- Better scalability
+
+---
+
+# 🧪 API Testing
+
+API testing is done using Postman.
+
+---
+
+# 🐳 Docker
+
+The backend is fully dockerized.
+
+## Services
+- Django Backend
+- MongoDB
+- Redis
+
+Run:
+
+```bash
+docker compose up
 ```
 
 ---
 
-# Auto Board Initialization
+# ⚡ CI/CD
 
-Each new user automatically gets:
+GitHub Actions automatically:
 
-* Wishlist
-* Applied
-* Interviewing
-* Offer
-* Rejected
+- Installs dependencies
+- Runs backend checks
+- Validates pull requests
 
 ---
 
-# API Testing
+# 🌱 Branching Strategy
 
-APIs are tested using Postman.
+```bash
+main
+develop
+feature/*
+```
+
+## Workflow
+
+1. Create feature branch
+2. Push changes
+3. Open Pull Request
+4. Merge into develop
+5. Merge develop → main
 
 ---
 
-# Upcoming Features
+# 🚀 Future Improvements
 
-* Board CRUD APIs
-* Job CRUD APIs
-* Kanban drag-and-drop
-* Analytics dashboard
-* Flutter frontend
-* Redis caching
-* CI/CD pipeline
+- Analytics Dashboard
+- Drag & Drop Kanban
+- Notifications
+- Resume Uploads
+- AI Resume Analysis
+- Job Search Integration
 
 ---
 
-# License
+# 👨‍💻 Author
 
-Developed for learning and portfolio purposes.
+Upendra Raj Joshi
+
+GitHub:
+https://github.com/Upendra48
