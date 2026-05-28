@@ -79,7 +79,7 @@ docker compose up --build
 ## 3. Backend Runs At
 
 ```bash
-http://127.0.0.1:8000/
+https://anugaman.onrender.com/api/auth/login/
 ```
 
 ---
