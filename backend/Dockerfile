@@ -10,6 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-# later change this to use gunicorn for production
-# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
-CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:8000 core.wsgi:application"]
