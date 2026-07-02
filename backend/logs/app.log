@@ -254,3 +254,6 @@ Not Found: /api/v1/docs/
 Watching for file changes with StatReloader
 "GET /api/docs/swagger/ HTTP/1.1" 200 2173
 "GET /api/docs/swagger/?format=openapi HTTP/1.1" 200 4140
+"GET / HTTP/1.1" 302 0
+"GET /api/docs/swagger/ HTTP/1.1" 200 2173
+"GET /api/docs/swagger/?format=openapi HTTP/1.1" 200 4140
