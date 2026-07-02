@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 from core.views import health_check
 from apps.authentication.views import test_db
 
@@ -34,34 +35,24 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny]
 )
 
-
-
-
-
 urlpatterns = [
+    path('', lambda request: redirect('/api/docs/swagger/'), name='home'),
     path('admin/', admin.site.urls),
-    
-    # API endpoints for authentication 
-    path('api/auth/', include('apps.authentication.urls')),
-    
-    # API endpoints for boards
-    path('api/boards/', include('apps.boards.urls')),
-    
-    # API endpoints for jobs
-    path('api/jobs/', include('apps.jobs.urls')),
-    
-    # API endpoints for analytics
-    path('api/analytics/', include('apps.analytics.urls')),
-    
+
+    # versioned API endpoints
+    path('api/v1/auth/', include('apps.authentication.urls')),
+    path('api/v1/boards/', include('apps.boards.urls')),
+    path('api/v1/jobs/', include('apps.jobs.urls')),
+    path('api/v1/analytics/', include('apps.analytics.urls')),
+
     # API endpoint for testing database connection
     path('test-db/', test_db),
-    
-    
+
     # Swagger/OpenAPI schema endpoints
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0)),
-    
+    path('api/docs/', lambda request: redirect('/api/docs/swagger/'), name='api-docs-root'),
+    path('api/docs/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/docs/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
     # health check endpoint
     path('health/', health_check, name='health-check'),
-    
 ]
