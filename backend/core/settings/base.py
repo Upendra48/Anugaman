@@ -18,8 +18,8 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG') == 'True'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-eb(0bab-$l1fg0)lkzxex9lqw0afh(__4$9=w*h11gwa(7&qdp')
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 # Redis configuration
 REDIS_HOST = os.getenv('REDIS_HOST')
@@ -41,14 +41,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-eb(0bab-$l1fg0)lkzxex9lqw0afh(__4$9=w*h11gwa(7&qdp'
+# The production value is configured through environment variables.
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-
-]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+render_hostname = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if render_hostname:
+    ALLOWED_HOSTS.append(render_hostname)
 
 
 # Application definition
@@ -90,6 +88,19 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
 ]
+
+extra_cors_origins = [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') if origin.strip()]
+CORS_ALLOWED_ORIGINS.extend(extra_cors_origins)
+CORS_ALLOWED_ORIGIN_REGEXES = [r'^https://.*\.onrender\.com$']
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+]
+
+render_hostname = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if render_hostname:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{render_hostname}')
 
 REST_FRAMEWORK = {
     
