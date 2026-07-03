@@ -107,19 +107,19 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 ### Register User
 
 ```http
-POST /api/auth/register/
+POST /api/v1/auth/register/
 ```
 
 ### Login User
 
 ```http
-POST /api/auth/login/
+POST /api/v1/auth/login/
 ```
 
 ### Get Current User
 
 ```http
-GET /api/auth/me/
+GET /api/v1/auth/me/
 ```
 
 Protected Route 
@@ -131,7 +131,7 @@ Protected Route
 ### Get User Boards
 
 ```http
-GET /api/boards/
+GET /api/v1/boards/
 ```
 
 Protected Route 
@@ -141,7 +141,7 @@ Protected Route
 ### Get Board Columns
 
 ```http
-GET /api/boards/{board_id}/columns/
+GET /api/v1/boards/{board_id}/columns/
 ```
 
 Protected Route 
@@ -153,7 +153,7 @@ Protected Route
 ### Create Job Application
 
 ```http
-POST /api/jobs/
+POST /api/v1/jobs/
 ```
 
 Protected Route 
@@ -163,7 +163,7 @@ Protected Route
 ### Get Jobs (Paginated)
 
 ```http
-GET /api/jobs/
+GET /api/v1/jobs/
 ```
 
 Protected Route 
@@ -173,7 +173,7 @@ Protected Route
 ### Update Job
 
 ```http
-PATCH /api/jobs/{job_id}/
+PATCH /api/v1/jobs/{job_id}/
 ```
 
 Protected Route 
@@ -183,7 +183,7 @@ Protected Route
 ### Delete Job
 
 ```http
-DELETE /api/jobs/{job_id}/
+DELETE /api/v1/jobs/{job_id}/
 ```
 
 Protected Route 
